@@ -1,0 +1,22 @@
+.card{
+    text-align: center;
+    color: black;
+  }
+  
+  .boutique{
+    width: 100%;
+    position: relative;
+  
+  }
+
+  .containers {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  a > img{
+    width: 300px;
+    height: 200px;
+  }
