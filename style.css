@@ -1,6 +1,7 @@
 .card{
     text-align: center;
     color: black;
+    text-decoration: none;
   }
   
   .boutique{
@@ -20,3 +21,9 @@
     width: 300px;
     height: 200px;
   }
+
+.navbar{
+  background-color: #8253D7;
+}
+
+

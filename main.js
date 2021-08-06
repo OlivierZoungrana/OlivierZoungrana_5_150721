@@ -1,15 +1,131 @@
 
 const cart = document.querySelector("#cart");
-let item=0;
-// cart.innerHTML = item;
+let items =0;
+
+
+
+// function addToCart(productRaw, number) {
+//    console.log(productRaw, number)
+//    localStorage.getItem('cart', JSON.parse(productRaw))
+//   localStorage.setItem('cart', JSON.stringify(productRaw));
+//   cart.innerHTML = items;
+//   StoreInLocalStorage(productRaw);
+//   total(myArray[items]) 
+//   ++items;
+//  }
+
+
+function getCart(){
+    return JSON.parse(localStorage.getItem('cart'));
+
+}
+
+
+
+function createCart(){
+
+    let cartN = {
+        'products': {},
+        'quantity': 0,
+        'total' : 0,
+    }
+
+    let verifyCart = localStorage.getItem('cart')
+
+    if(!verifyCart){
+        localStorage.setItem('cart', JSON.stringify(cartN));
+
+    }
+}
+
+createCart();
+
+
+let product = {
+
+    'name':"",
+    'id' : "",
+    'prix': 0,
+    'quantity':0,
+    'total': 0
+}
+
+
+let cartProduct = {
+
+   '123':  {
+        'name': 'camera Zeiss',
+        'id' : '123',
+        'price': 300,
+        'quantity':1,
+        'total': 300
+
+    },
+
+   '124': {
+        'name': 'camera Zeiss lune',
+        'id' : '124',
+        'prix': 1300,
+        'quantity':1,
+        'total': 1300
+    }
+};
+
+
+
+
+
+
+
+
+
+function addToCart(product, quantity){
+    let cartN = getCart();
+
+    let cartProducts = cartN.products;
+    let keys = Object.keys(cartProducts)
+
+    // console.log(keys)
+console.log(keys.indexOf(product._id))
+// console.log(cartN.products)
+        if(keys.indexOf(product._id)!==-1){
+           console.log(cartN.products[product._id])
+           cartN.products[product._id].quantity+=1
+           cartN.products[product._id].total = cartN.products[product._id].quantity * cartN.products[product._id].price
+        
+        }else{
+
+            product.quantity = 1
+            product.total= product.price
+            cartN.products[product._id]= product;
+            cartN.quantity+=1;
+            cartN.total +=product.total
+
+
+
+
+        }
+    localStorage.setItem('cart', JSON.stringify(cartN))
+
+            
+
+    console.log(cartN)
+    cartN.innerHTML = items;
+    ++items;
+    console.log(product, quantity)
+    
+};
+
+
+
+
+
+
 
 
 
 
   
-
-
-
 
 
 
@@ -69,7 +185,8 @@ fetch("http://localhost:3000/api/cameras")
        item.price,
        item.imageUrl,
        item._id,
-       item.description
+       item.description,
+       addToCart
        
    );
   container.append(cameras);
@@ -93,14 +210,17 @@ fetch("http://localhost:3000/api/cameras/"+ productId)
     //  console.log(data);
 
     const cameras = generateOneCamera(
+        data._id,
         data.name,
         data.price,
         data.imageUrl,
-        data._id,
-        data.description
-        
+        data.description,
+        addToCart
         
     );
+
+
+    
 
     container.append(cameras);
 
@@ -121,11 +241,14 @@ else
 getProducts();
 
 
-function generateOneCamera(nameCamera, descriptionCamera, imageUrl, priceCamera, selectionCamera, onClick={} ){
+function generateOneCamera( idCamera,nameCamera,priceCamera,imageUrl, descriptionCamera, selectionCamera, onClick={} ){
     const div = document.createElement("div");
-    div.classList.add("card");
- 
-    const cameraThumb = document.createElement("img");
+    div.classList.add("card", "mb-3");
+    
+    const id_camera = document.createElement('p')
+
+
+    const cameraThumb = document.createElement("img", "rounded-start");
     cameraThumb.src = imageUrl;
  
     const name = document.createElement("h3");
@@ -133,6 +256,7 @@ function generateOneCamera(nameCamera, descriptionCamera, imageUrl, priceCamera,
     name.innerHTML = nameCamera;
 
     const description = document.createElement("p");
+    description.classList.add("card-text");
     description.innerHTML = descriptionCamera;
  
     const price = document.createElement("h4");
@@ -145,17 +269,14 @@ function generateOneCamera(nameCamera, descriptionCamera, imageUrl, priceCamera,
  
  
     const addContainer = document.createElement("div");
-    const cameraRaw = {name: nameCamera, imageUrl: cameraThumb, price: priceCamera}
+    const cameraRaw = {_id: idCamera, name: nameCamera, price: priceCamera, imageUrl: cameraThumb}
  
  
     const addButton = document.createElement("button");
     addButton.classList.add("btn-primary", "btn")
     addButton.innerHTML = "Ajouter au Panier";
 
-    addButton.addEventListener('click', e=>{
-        
-    } )
-   // addButton.addEventListener("click", () => onClick(cameraRaw, 1))
+    addButton.addEventListener("click", () =>addToCart(cameraRaw, 1));
     addContainer.append(addButton);
  
     div.append(cameraThumb, name, description, selection, price, addContainer);
@@ -165,6 +286,7 @@ function generateOneCamera(nameCamera, descriptionCamera, imageUrl, priceCamera,
 
 
 
+  
 
 
 
