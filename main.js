@@ -19,9 +19,6 @@ function getCart(){
     return JSON.parse(localStorage.getItem('cart'));
 
 }
-
-
-
 function createCart(){
 
     let cartN = {
@@ -110,7 +107,7 @@ console.log(keys.indexOf(product._id))
             
 
     console.log(cartN)
-    cartN.innerHTML = items;
+    cart.innerHTML = items +1;
     ++items;
     console.log(product, quantity)
     
@@ -120,12 +117,6 @@ console.log(keys.indexOf(product._id))
 
 
 
-
-
-
-
-
-  
 
 
 
@@ -261,6 +252,7 @@ function generateOneCamera( idCamera,nameCamera,priceCamera,imageUrl, descriptio
  
     const price = document.createElement("h4");
     price.classList.add("card-text")
+
     price.innerHTML = priceCamera;
 
     const selection = document.createElement("select");
@@ -283,6 +275,21 @@ function generateOneCamera( idCamera,nameCamera,priceCamera,imageUrl, descriptio
     return div;
 
   }
+
+
+  function displayCart(){
+
+        const dis = document.querySelector(".display-cart")
+        
+        console.log(dis)
+
+      var prod = localStorage.getItem("_id");
+      
+
+  }
+
+  displayCart();
+
 
 
 
