@@ -3,18 +3,6 @@ const cart = document.querySelector("#cart");
 let items =0;
 
 
-
-// function addToCart(productRaw, number) {
-//    console.log(productRaw, number)
-//    localStorage.getItem('cart', JSON.parse(productRaw))
-//   localStorage.setItem('cart', JSON.stringify(productRaw));
-//   cart.innerHTML = items;
-//   StoreInLocalStorage(productRaw);
-//   total(myArray[items]) 
-//   ++items;
-//  }
-
-
 function getCart(){
     return JSON.parse(localStorage.getItem('cart'));
 
@@ -36,44 +24,6 @@ function createCart(){
 }
 
 createCart();
-
-
-let product = {
-
-    'name':"",
-    'id' : "",
-    'prix': 0,
-    'quantity':0,
-    'total': 0
-}
-
-
-let cartProduct = {
-
-   '123':  {
-        'name': 'camera Zeiss',
-        'id' : '123',
-        'price': 300,
-        'quantity':1,
-        'total': 300
-
-    },
-
-   '124': {
-        'name': 'camera Zeiss lune',
-        'id' : '124',
-        'prix': 1300,
-        'quantity':1,
-        'total': 1300
-    }
-};
-
-
-
-
-
-
-
 
 
 function addToCart(product, quantity){
@@ -112,12 +62,6 @@ console.log(keys.indexOf(product._id))
     console.log(product, quantity)
     
 };
-
-
-
-
-
-
 
 
 function generateCameras(nameCamera, priceCamera, imageUrl, idCamera, onClick = {}) {
@@ -218,7 +162,6 @@ fetch("http://localhost:3000/api/cameras/"+ productId)
 })
     article.appendChild(container);
 };
-
 
 
 const queryString = window.location.search;
