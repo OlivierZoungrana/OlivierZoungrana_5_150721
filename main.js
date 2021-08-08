@@ -222,21 +222,16 @@ function generateOneCamera( idCamera,nameCamera,priceCamera,imageUrl, descriptio
 
   function displayCart(){
 
-        const dis = document.querySelector(".display-cart")
-        
-        console.log(dis)
+     let cartItems = localStorage.getItem("cart")
 
-      var prod = localStorage.getItem("_id");
-      
+     cartItems = JSON.parse(cartItems)
+
+     console.log(cartItems)
+
 
   }
 
   displayCart();
-
-
-
-
-  
 
 
 
