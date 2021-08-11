@@ -1,12 +1,37 @@
 
-const cart = document.querySelector("#cart");
-let items =0;
+const carts = document.querySelector("#cart");
 
+/*
+DATA FOR /order
+
+{
+    contact {
+        firstName: '',
+        lastName: '',
+        address: '',
+        city: '',
+        email: ''
+    },
+    products: [
+
+    ]
+}
+
+*/
+
+
+
+// Initialize global cart data
+let cartData = getCart();
+if(!cartData) {
+    createCart();
+}
+updateCartData();
 
 function getCart(){
     return JSON.parse(localStorage.getItem('cart'));
-
 }
+
 function createCart(){
 
     let cartN = {
@@ -15,15 +40,15 @@ function createCart(){
         'total' : 0,
     }
 
-    let verifyCart = localStorage.getItem('cart')
-
-    if(!verifyCart){
-        localStorage.setItem('cart', JSON.stringify(cartN));
-
-    }
+    localStorage.setItem('cart', JSON.stringify(cartN));
 }
 
-createCart();
+function updateCartData() {
+    cartData = getCart()
+
+    // update menu cart quantity
+    cart.innerHTML = cartData.quantity;
+}
 
 
 function addToCart(product, quantity){
@@ -35,30 +60,23 @@ function addToCart(product, quantity){
     // console.log(keys)
 console.log(keys.indexOf(product._id))
 // console.log(cartN.products)
-        if(keys.indexOf(product._id)!==-1){
+        if(keys.indexOf(product._id) !== -1){
            console.log(cartN.products[product._id])
-           cartN.products[product._id].quantity+=1
+           cartN.products[product._id].quantity += quantity
            cartN.products[product._id].total = cartN.products[product._id].quantity * cartN.products[product._id].price
-        
-        }else{
-
-            product.quantity = 1
-            product.total= product.price
-            cartN.products[product._id]= product;
-            cartN.quantity+=1;
-            cartN.total +=product.total
-
-
-
-
+        } else {
+            product.quantity = quantity
+            product.total = product.price * quantity
+            cartN.products[product._id] = product;
         }
+        // update global quantity and price
+        cartN.quantity += quantity;
+        cartN.total += product.price * quantity
     localStorage.setItem('cart', JSON.stringify(cartN))
-
-            
+    updateCartData()
 
     console.log(cartN)
-    cart.innerHTML = items +1;
-    ++items;
+    
     console.log(product, quantity)
     
 };
@@ -169,9 +187,11 @@ const urlParams = new URLSearchParams(queryString);
 const productId = urlParams.get('sku');
 const productSpan = document.getElementById('product_id');
 
+let boutique = document.querySelector(".boutique")
+
  if(productId)
  getProductDetails(productId);
-else
+if(boutique && productId===null)
 getProducts();
 
 
@@ -222,16 +242,52 @@ function generateOneCamera( idCamera,nameCamera,priceCamera,imageUrl, descriptio
 
   function displayCart(){
 
-     let cartItems = localStorage.getItem("cart")
+  
+    let cartItems = localStorage.getItem("cart")
+   
+    cartItems = JSON.parse(cartItems)
 
-     cartItems = JSON.parse(cartItems)
-
-     console.log(cartItems)
+    console.log(cartItems)
 
 
-  }
+    let productContainer = document.querySelector(".products")
 
-  displayCart();
+    if(cartItems && productContainer){
+            productContainer.innerHTML = '';
+
+        for(let i in cartItems){
+            
+                    Object.values(cartItems[i]).map(item=>{
+
+                productContainer.innerHTML+= `
+
+
+                <div class="product">
+
+                <i class="fas fa-times-circle"></i>
+
+                <span>${item.name}</span>
+                <div class="price">${item.price}</div>
+                <div class="quantity">${item.quantity}</div>
+                <div class="total">${item.total}</div>
+                
+            
+                </div>
+
+              
+                
+                `        })     
+                    }
+               
+
+                }
+            }
+
+       
+
+
+    displayCart();
+       
 
 
 

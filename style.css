@@ -34,6 +34,7 @@
   margin-top: 50px;
   display: flex;
   flex-wrap: wrap;
+ 
 }
 
 .product-header{
@@ -70,11 +71,19 @@
   align-items: center;
 }
 
-.product{
-  width: 45%;
+.products{
+  width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 10px 0;
+  padding: 20px 0;
+  margin: 10px;
   border-bottom: 1px solid lightblue;
+  flex-direction: column;
+}
+
+.product{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
