@@ -12,15 +12,20 @@
 
   .containers {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+    padding: 2em;
+    align-content: space-around;
   }
 
-  a > img{
-    width: 300px;
-    height: 200px;
+  .containers a{
+    margin-bottom: 1em;
   }
+
+   a > img{
+    width: 100%;
+    height: 200px;
+  } 
 
 .navbar{
   background-color: #8253D7;
@@ -29,21 +34,13 @@
 
 .display-cart{
   max-width: 650px;
-  justify-content: space-around;
   margin: 0 auto;
   margin-top: 50px;
-  display: flex;
-  flex-wrap: wrap;
- 
+  display: grid;
+  grid-template-columns:1fr 1fr 1fr 1fr;
+  padding: 30px;
 }
 
-.product-header{
-  width: 100%;
-  display: flex;
-  max-width: 650px;
-  justify-content: flex-start;
-  border-bottom:  4px solid lightblue;
-}
 
 .product-title{
 
@@ -52,21 +49,20 @@
 
 .price{
   width: 15%;
-  border-bottom: 4px solid lightblue;
   display: flex;
   align-items: center;
 }
 
 .quantity{
   width: 30%;
-  border-bottom: 1px solid lightblue;
+
   display: flex;
   align-items: center;
 }
 
 .total{
   width: 10%;
-  border-bottom: 1px solid lightblue;
+
   display: flex;
   align-items: center;
 }

@@ -1,23 +1,7 @@
 
 const carts = document.querySelector("#cart");
 
-/*
-DATA FOR /order
 
-{
-    contact {
-        firstName: '',
-        lastName: '',
-        address: '',
-        city: '',
-        email: ''
-    },
-    products: [
-
-    ]
-}
-
-*/
 
 
 
@@ -45,7 +29,6 @@ function createCart(){
 
 function updateCartData() {
     cartData = getCart()
-
     // update menu cart quantity
     cart.innerHTML = cartData.quantity;
 }
@@ -199,7 +182,7 @@ function generateOneCamera( idCamera,nameCamera,priceCamera,imageUrl, descriptio
     const div = document.createElement("div");
     div.classList.add("card", "mb-3");
     
-    const id_camera = document.createElement('p')
+    const id_camera = document.createElement('p');
 
 
     const cameraThumb = document.createElement("img", "rounded-start");
@@ -214,12 +197,11 @@ function generateOneCamera( idCamera,nameCamera,priceCamera,imageUrl, descriptio
     description.innerHTML = descriptionCamera;
  
     const price = document.createElement("h4");
-    price.classList.add("card-text")
-
+    price.classList.add("card-text");
     price.innerHTML = priceCamera;
 
     const selection = document.createElement("select");
-    selection.classList.add("card-text")
+    selection.classList.add("card-text"); 
     selection.innerHTML= selectionCamera;
  
  
@@ -250,10 +232,11 @@ function generateOneCamera( idCamera,nameCamera,priceCamera,imageUrl, descriptio
     console.log(cartItems)
 
 
-    let productContainer = document.querySelector(".products")
+    let productContainer = document.querySelector(".display-cart")
+    let totalCostContainer = document.querySelector(".totalCost")
 
     if(cartItems && productContainer){
-            productContainer.innerHTML = '';
+            // productContainer.insertBefore = '';
 
         for(let i in cartItems){
             
@@ -261,32 +244,176 @@ function generateOneCamera( idCamera,nameCamera,priceCamera,imageUrl, descriptio
 
                 productContainer.innerHTML+= `
 
-
-                <div class="product">
-
-                <i class="fas fa-times-circle"></i>
-
-                <span>${item.name}</span>
+                <div><i class="fas fa-times-circle"></i> <span>${item.name}</span></div>
                 <div class="price">${item.price}</div>
                 <div class="quantity">${item.quantity}</div>
                 <div class="total">${item.total}</div>
                 
-            
-                </div>
-
-              
-                
                 `        })     
-                    }
+            }
                
 
                 }
+
+                
             }
 
-       
-
-
     displayCart();
+
+
+    const afficherFormulaire =() =>{
+
+        const positionFormulaire = document.querySelector(".formulaire-content")
+
+        const structureFormulaire = `
+
+        <form>
+          <div class="form-row">
+            <div class="col-md-4 mb-3">
+              <label for="nom">Nom</label>
+              <input type="text" class="form-control is-valid" id="firstName" placeholder="First name" value="Mark" required>
+              <div class="valid-feedback">
+                Valide!
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="prenom">Prénom</label>
+              <input type="text" class="form-control is-valid" id="lastName" placeholder="Last name" value="Otto" required>
+              <div class="valid-feedback">
+                Valide!
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="adresse">Adresse</label>
+              <input type="text" class="form-control is-valid" id="address" placeholder="Adresse" required>
+              <div class="invalid-feedback">
+                Entrer votre Adresse.
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="ville">Ville</label>
+              <input type="text" class="form-control is-valid" id="city" placeholder="City" required>
+              <div class="invalid-feedback">
+                Choissisez une ville.
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="email">E-mail</label>
+              <input type="email" class="form-control is-valid" id="email" placeholder="e-mail" required>
+              <div class="invalid-feedback">
+                Votre 
+              </div>
+            </div>
+          </div>
+  
+          <button id="sendFormulaire" class="btn btn-primary" type="submit">Soumettre</button>
+        </form>
+          
+        
+        
+        
+        `;
+
+        positionFormulaire.insertAdjacentHTML("afterend", structureFormulaire);
+    }
+
+afficherFormulaire();
+
+
+//création tableauId
+
+function createTableauId(){
+    products= [];
+for(let i in cartData){
+    for(let k in cartData[i]){
+        products.push(cartData[i][k]._id)
+    }
+} 
+};
+createTableauId();
+
+console.log();
+
+
+// console.log(tableauId)
+
+//
+
+//selection du bouton envoyer
+
+let btnEnvoyerFormalaire = document.querySelector("#sendFormulaire")
+
+
+
+btnEnvoyerFormalaire.addEventListener('click', async(e)=>{
+e.preventDefault();
+
+ let contact = {
+
+    firstName: document.querySelector("#firstName").value,
+    lastName:document.querySelector("#lastName").value,
+    address: document.querySelector("#address").value,
+    city:document.querySelector("#city").value,
+    email: document.querySelector("#email").value
+ }
+
+ localStorage.setItem("contact", JSON.stringify(contact))
+
+    const aEnvoyer = {
+        products,
+        contact
+    }
+
+    console.log(aEnvoyer);
+
+
+    let promesse = fetch("http://localhost:3000/api/cameras/order/", {
+        method: "POST",
+        body: JSON.stringify(aEnvoyer),
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+    });
+await promesse.then((res)=>{
+    
+    return res.json()
+    
+    }).then((data)=> console.log(data)).catch(console.log)
+    // console.log("promesse")
+    // console.log(promesse)
+
+  
+})
+
+
+
+// contenu local storage dans le formulaire
+
+
+
+let localData = localStorage.getItem("contact")
+
+console.log(localData)
+
+let dataObject = JSON.parse(localData)
+
+function remplirFormulaireLocalStorage(input){
+document.querySelector(`#${input}`).value = dataObject[input];
+}
+
+remplirFormulaireLocalStorage("firstName");
+remplirFormulaireLocalStorage("lastName");
+remplirFormulaireLocalStorage("address");
+remplirFormulaireLocalStorage("city");
+remplirFormulaireLocalStorage("email");
+
+
+console.log(dataObject)
        
 
 
