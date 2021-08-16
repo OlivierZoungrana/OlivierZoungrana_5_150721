@@ -64,6 +64,60 @@
 
         <div class="row formulaire-content"></div>
 
+        <form action="./order.html" >
+          <div class="form-row">
+            <div class="col-md-4 mb-3">
+              <label for="nom">Nom</label>
+            </br>
+              <span id="noFirstName" class="infoChampManquant"></span>
+              <input type="text" class="form-control is-valid" id="firstName" placeholder="First name" value="Mark" required>
+              <div class="valid-feedback">
+                Valide!
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="prenom">Prénom</label><br>
+              <span id="noLastName" class="infoChampManquant"></span>
+              <input type="text" class="form-control is-valid" id="lastName" placeholder="Last name" value="Otto" required>
+              <div class="valid-feedback">
+                Valide!
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="adresse">Adresse</label><br>
+              <span id="noAddress" class="infoChampManquant"></span>
+              <input type="text" class="form-control is-valid" id="address" placeholder="Adresse" required>
+              <div class="invalid-feedback">
+                Entrer votre Adresse.
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="ville">Ville</label><br>
+              <span id="noCity" class="infoChampManquant"></span>
+              <input type="text" class="form-control is-valid" id="city" placeholder="City" required>
+              <div class="invalid-feedback">
+                Choissisez une ville.
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="email">E-mail</label><br>
+              <span id="noEmail" class="infoChampManquant"></span>
+              <input type="email" class="form-control is-valid" id="email" placeholder="e-mail" required>
+              <div class="invalid-feedback">
+                Votre 
+              </div>
+            </div>
+          </div>
+  
+          <button  id="sendFormulaire" class="btn btn-primary" type="submit">Soumettre</button>
+        </form>
+          
+        
+
       
     </div>
 
