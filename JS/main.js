@@ -182,28 +182,36 @@ fetch("http://localhost:3000/api/cameras/"+ productId)
 
 function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl, descriptionCamera, selectionCamera, onClick={} ){
     const div = document.createElement("div");
-    div.classList.add("card", "mb-3");
+    div.classList.add("card", "mb-3", "card-detail");
     
     const id_camera = document.createElement('p');
 
-
+    const div1 = document.createElement("div")
+    div1.classList.add("col-md-4")
     const cameraThumb = document.createElement("img");
     cameraThumb.src = imageUrl;
- 
+    cameraThumb.classList.add("col-md-4")
+    
+    
+    const div2 = document.createElement("div")
+    div2.classList.add("card-body")
+
+    div2.classList.add("col-md-8")
     const name = document.createElement("h3");
-    name.classList.add("card-title");
+    name.classList.add("card-title", "col-md-8");
     name.innerHTML = nameCamera;
+   div2.insertBefore(name, null)
 
     const description = document.createElement("p");
-    description.classList.add("card-text");
+    description.classList.add("card-text","col-md-8" );
     description.innerHTML = descriptionCamera;
  
     const price = document.createElement("h4");
-    price.classList.add("card-text");
+    price.classList.add("card-text", "col-md-8");
     price.innerHTML = priceCamera;
 
     const selection = document.createElement("select");
-    selection.classList.add("card-text"); 
+    selection.classList.add("card-text", "col-md-8"); 
     selection.innerHTML= selectionCamera;
  
  
@@ -212,7 +220,7 @@ function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl,
  
  
     const addButton = document.createElement("button");
-    addButton.classList.add("btn-primary", "btn")
+    addButton.classList.add("btn-primary", "btn", "col-md-8")
     addButton.innerHTML = "Ajouter au Panier";
 
     addButton.addEventListener("click", () =>addToCart(cameraRaw, 1));
