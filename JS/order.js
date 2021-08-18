@@ -2,7 +2,6 @@
 
 let orderIdResponse = localStorage.getItem("orderId");
 
-console.log(orderIdResponse)
 // récuperer le prix total
 
 let prixTotalResponse = localStorage.getItem("cart")
@@ -27,3 +26,23 @@ let structureConfCommande = `
 `;
 
 positionConfirmationOrder.insertAdjacentHTML("afterend",structureConfCommande);
+
+//effacer local storage
+
+function deleteLocalStorage(key){
+    localStorage.removeItem(key)
+};
+
+deleteLocalStorage("cart");
+deleteLocalStorage("contact");
+deleteLocalStorage("orderId");
+
+
+if(orderIdResponse == null){
+    window.location.href="index.html";
+
+}
+
+
+
+

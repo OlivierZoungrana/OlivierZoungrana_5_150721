@@ -23,7 +23,7 @@ if(!cartData) {
 }
 updateCartData();
 
-function getCart(){
+ function getCart(){
     return JSON.parse(localStorage.getItem('cart'));
 }
 
@@ -38,7 +38,7 @@ function createCart(){
     localStorage.setItem('cart', JSON.stringify(cartN));
 }
 
-function updateCartData() {
+ function updateCartData() {
     cartData = getCart()
     // update menu cart quantity
     cart.innerHTML = cartData.quantity;
@@ -157,6 +157,7 @@ fetch("http://localhost:3000/api/cameras/"+ productId)
     //  console.log(data);
 
     const cameras = generateOneCamera(
+        data.lenses,
         data._id,
         data.name,
         data.price,
@@ -178,14 +179,14 @@ fetch("http://localhost:3000/api/cameras/"+ productId)
 
 
 
-function generateOneCamera( idCamera,nameCamera,priceCamera,imageUrl, descriptionCamera, selectionCamera, onClick={} ){
+function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl, descriptionCamera, selectionCamera, onClick={} ){
     const div = document.createElement("div");
     div.classList.add("card", "mb-3");
     
     const id_camera = document.createElement('p');
 
 
-    const cameraThumb = document.createElement("img", "rounded-start");
+    const cameraThumb = document.createElement("img");
     cameraThumb.src = imageUrl;
  
     const name = document.createElement("h3");
@@ -412,6 +413,8 @@ if(controlFirstName() && controlLastName() && controlCity() && controlEmail() &&
 
     
 }else{
+    document.querySelector(".alert")
+
   alert("remplissez correctement le formulaire");
 }
 
@@ -483,38 +486,7 @@ console.log(dataObject)
 
 
 
-// function displayCommandeConfirmation(){
 
-//   let order = localStorage.getItem("contact")
-
-//   order = JSON.parse(order)
-
-//   console.log(order)
-
-//   let orderContainer = document.querySelector(".orderClient")
-
-//   if(order && orderContainer){
-
-//     Object.values(order).map(item=>{
-
-//       orderContainer += `
-      
-//       <div>
-//       <h2>Mr${item} votre commande est validé </h2>
-//       </div>
-//       `
-    
-    
-//     })
-//   }
-
-// }
-
-// displayCommandeConfirmation();
-       
-
-
-// récuper lorderID
 
 
 
