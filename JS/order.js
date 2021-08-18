@@ -11,6 +11,8 @@ prixTotalResponse = JSON.parse(prixTotalResponse)
 
 let positionConfirmationOrder = document.querySelector("#recapCommande")
 
+
+
 let structureConfCommande = `
 <div class="card">
 <div class="card-title">
@@ -40,7 +42,6 @@ deleteLocalStorage("orderId");
 
 if(orderIdResponse == null){
     window.location.href="index.html";
-
 }
 
 

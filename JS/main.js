@@ -8,7 +8,7 @@ const productSpan = document.getElementById('product_id');
 
 let boutique = document.querySelector(".boutique")
 
- if(productId)
+if(productId)
  getProductDetails(productId);
 if(boutique && productId===null)
 getProducts();
@@ -23,7 +23,8 @@ if(!cartData) {
 }
 updateCartData();
 
- function getCart(){
+// vérifie que la clé cart existe bien dans le localStorage
+function getCart(){
     return JSON.parse(localStorage.getItem('cart'));
 }
 
@@ -38,13 +39,13 @@ function createCart(){
     localStorage.setItem('cart', JSON.stringify(cartN));
 }
 
- function updateCartData() {
+function updateCartData() {
     cartData = getCart()
     // update menu cart quantity
     cart.innerHTML = cartData.quantity;
 }
 
-
+//ajouter un produit au panier
 function addToCart(product, quantity){
     let cartN = getCart();
 
@@ -142,7 +143,7 @@ fetch("http://localhost:3000/api/cameras")
 article.appendChild(container);
 }
 
-
+//générer les information du produit grace à son Id
 function getProductDetails(productId){
     const container = document.createElement("div")
     container.classList.add("container")
@@ -222,7 +223,7 @@ function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl,
 
   }
 
-
+//afficher les informations des produits chois dans le panier
   function displayCart(){
 
   
@@ -248,15 +249,10 @@ function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl,
                 <div><i class="fas fa-times-circle"></i> <span>${item.name}</span></div>
                 <div class="price">${item.price}</div>
                 <div class="quantity">${item.quantity}</div>
-                <div class="total">${item.total}</div>
-                
+                <div class="total">${item.total}</div>    
                 `        })     
             }
-               
-
                 }
-
-                
             }
 
     displayCart();
@@ -283,14 +279,14 @@ console.log();
 
 //selection du bouton envoyer
 
-let btnEnvoyerFormalaire = document.querySelector("#sendFormulaire")
+let btnEnvoyerFormulaire = document.querySelector("#sendFormulaire")
 
 
-
-btnEnvoyerFormalaire.addEventListener('click', async(e)=>{
+// envoi du formulaire et du panier de produit dans le locaStorage et vérification des champs du formulaire
+btnEnvoyerFormulaire.addEventListener('click', async(e)=>{
 e.preventDefault();
 
- let contact = {
+let contact = {
 
     firstName: document.querySelector("#firstName").value,
     lastName:document.querySelector("#lastName").value,
@@ -302,41 +298,41 @@ e.preventDefault();
 
  // validation formulaire//
 
- let testAlert = (value)=>{
+let testAlert = (value)=>{
     return `${value} n'est pas correct:  Chiffres et symboles ne sont aps autorisés \n ne pas dépasser 20caractères, minimum 3 caractères ` }
 
 
- let regExLastNameFistNameCity = (value)=>{
+let regExLastNameFistNameCity = (value)=>{
    return /^[ \u00c0-\u01ffa-zA-Z'\-]{3,20}$/.test(value);
  }
 
- let regExEmail = (value)=>{
+let regExEmail = (value)=>{
   return /^^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
  }
 
- let regExAdress = (value)=>{
+let regExAdress = (value)=>{
    return /^[a-zA-Z0-9\s,.'-]{3,}$/.test(value);
  }
  //controle de la validité du nom
 
 
  // gérer l'affichage du texte à coté des champs
- function dataChampmanquantTexteVide(querySelectorId){
+function dataChampmanquantTexteVide(querySelectorId){
   document.querySelector(`#${querySelectorId}`).textContent ="";
  }
 
- function dataChampmanquantTexte(querySelectorId){
+function dataChampmanquantTexte(querySelectorId){
   document.querySelector(`#${querySelectorId}`).textContent ="veuillez remplir correctement ce chanp";
  }
 
- function controlFirstName(){
+function controlFirstName(){
 
- let theFistName = contact.firstName
+let theFistName = contact.firstName
 
- if(regExLastNameFistNameCity(theFistName)){
+if(regExLastNameFistNameCity(theFistName)){
   dataChampmanquantTexteVide("noFirstName");
   return true;
- }else{
+}else{
    dataChampmanquantTexte("noFirstName");
 alert(testAlert("fistName"))
  return false;
@@ -421,7 +417,7 @@ if(controlFirstName() && controlLastName() && controlCity() && controlEmail() &&
     
 });
 
-
+// envoyer les informations de la commande au serveur
 function sendToServer(aEnvoyer){
   let promesse = fetch("http://localhost:3000/api/cameras/order/", {
         method: "POST",
@@ -467,8 +463,6 @@ if(response.ok){
 
 let localData = localStorage.getItem("contact")
 let dataObject = JSON.parse(localData);
-
-// validation du formulaires 
 
 function remplirFormulaireLocalStorage(input){
   document.querySelector(`#${input}`).value = dataObject[input];
