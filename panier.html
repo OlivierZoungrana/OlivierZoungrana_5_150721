@@ -67,8 +67,7 @@
         <form action="./order.html" >
           <div class="form-row">
             <div class="col-md-4 mb-3">
-              <label for="nom">Nom</label>
-            </br>
+              <label for="firsName">Nom</label>
               <span id="noFirstName" class="infoChampManquant"></span>
               <input type="text" class="form-control is-valid" id="firstName" placeholder="First name" value="Mark" required>
               <div class="valid-feedback">
@@ -76,7 +75,7 @@
               </div>
             </div>
             <div class="col-md-4 mb-3">
-              <label for="prenom">Prénom</label><br>
+              <label for="lastName">Prénom</label><br>
               <span id="noLastName" class="infoChampManquant"></span>
               <input type="text" class="form-control is-valid" id="lastName" placeholder="Last name" value="Otto" required>
               <div class="valid-feedback">
@@ -84,7 +83,7 @@
               </div>
             </div>
             <div class="col-md-6 mb-3">
-              <label for="adresse">Adresse</label><br>
+              <label for="address">Adresse</label><br>
               <span id="noAddress" class="infoChampManquant"></span>
               <input type="text" class="form-control is-valid" id="address" placeholder="Adresse" required>
               <div class="invalid-feedback">
@@ -94,7 +93,7 @@
           </div>
           <div class="form-row">
             <div class="col-md-6 mb-3">
-              <label for="ville">Ville</label><br>
+              <label for="city">Ville</label><br>
               <span id="noCity" class="infoChampManquant"></span>
               <input type="text" class="form-control is-valid" id="city" placeholder="City" required>
               <div class="invalid-feedback">
@@ -200,14 +199,5 @@
       <script src="./JS/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </body>
-<div style="position: fixed;top:0;right:0;width:300px;padding:10px;z-index:1000;">
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-       <strong>Hello </strong> Votre produit n'as pas été ajouté
-       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-       <strong>Hello</strong> Votre produit a bien été ajouté
-       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
- </div>
+
 </html>
