@@ -39,6 +39,14 @@ function createCart(){
     localStorage.setItem('cart', JSON.stringify(cartN));
 }
 
+function formatPrice( rawPrice ) {
+    let separator = ',';
+    let symbol = '€';
+    let price = parseInt( rawPrice ) / 100;
+    return price.toFixed(2).replace('.', separator) + '&nbsp;' + symbol;
+}
+
+
 function updateCartData() {
     cartData = getCart()
     // update menu cart quantity
@@ -78,6 +86,9 @@ console.log(keys.indexOf(product._id))
 
 
 function generateCameras(nameCamera, priceCamera, imageUrl, idCamera, onClick = {}) {
+    const div = document.createElement("div");
+    div.classList.add("col-xl-3", "col-lg-4", "col-md-6", "p-2");
+
     const a = document.createElement("a");
 
     const id = document.createElement("p")
@@ -95,7 +106,7 @@ function generateCameras(nameCamera, priceCamera, imageUrl, idCamera, onClick = 
  
     const price = document.createElement("h4");
     price.classList.add("card-text")
-    price.innerHTML = priceCamera;
+    price.innerHTML = formatPrice(priceCamera);
  
  
     const addContainer = document.createElement("div");
@@ -116,7 +127,8 @@ function generateCameras(nameCamera, priceCamera, imageUrl, idCamera, onClick = 
     addContainer.append(addButton);
  
     a.append(cameraThumb, name, price);
-    return a;
+    div.append(a);
+    return div;
  }
 
 function getProducts(){
@@ -182,17 +194,24 @@ fetch("http://localhost:3000/api/cameras/"+ productId)
 
 function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl, descriptionCamera, selectionCamera, onClick={} ){
     const div = document.createElement("div");
-    div.classList.add("card", "mb-3", "card-detail");
+    div.classList.add("card", "mb-3");
     
     const id_camera = document.createElement('p');
 
     const div1 = document.createElement("div")
-    div1.classList.add("col-md-4")
+    div1.classList.add("row")
+    div.append(div1)
+
+    const div3 = document.createElement("div")
     const cameraThumb = document.createElement("img");
     cameraThumb.src = imageUrl;
-    cameraThumb.classList.add("col-md-4")
+    cameraThumb.classList.add("img-fluid", "rounded-start")
     
-    
+    div3.classList.add("col-md-4")
+  
+    cameraThumb.append(div3)
+
+
     const div2 = document.createElement("div")
     div2.classList.add("card-body")
 
@@ -208,15 +227,31 @@ function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl,
  
     const price = document.createElement("h4");
     price.classList.add("card-text", "col-md-8");
-    price.innerHTML = priceCamera;
+    price.innerHTML = formatPrice(priceCamera);
 
+
+   let mot=  document.createElement("p").textContent= `Selectionner un lens : `;
     const selection = document.createElement("select");
-    selection.classList.add("card-text", "col-md-8"); 
+    selection.classList.add("card-text", "opt"); 
     selection.innerHTML= selectionCamera;
+
+    let opt = document.querySelector(".opt")
+
+    // ajouter une option dans le select 
+    for(i=0; i<datalenses.length; i++){
+         let opti = datalenses[i];
+        let option = document.createElement("option")
+        option.innerHTML= opti;
+        option.value = opti;
+        selection.appendChild(option);
+    }
+
+
+    
  
  
     const addContainer = document.createElement("div");
-    const cameraRaw = {_id: idCamera, name: nameCamera, price: priceCamera, imageUrl: cameraThumb}
+    const cameraRaw = { _id: idCamera, name: nameCamera, price: priceCamera, imageUrl: cameraThumb}
  
  
     const addButton = document.createElement("button");
@@ -226,7 +261,7 @@ function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl,
     addButton.addEventListener("click", () =>addToCart(cameraRaw, 1));
     addContainer.append(addButton);
  
-    div.append(cameraThumb, name, description, selection, price, addContainer);
+    div.append(cameraThumb, name, description, mot, selection, price, addContainer);
     return div;
 
   }
@@ -241,7 +276,10 @@ function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl,
 
     console.log(cartItems)
 
+    let prixTotalResponse = localStorage.getItem("cart")
 
+    prixTotalResponse = JSON.parse(prixTotalResponse)
+    
     let productContainer = document.querySelector(".display-cart")
     let totalCostContainer = document.querySelector(".totalCost")
 
@@ -255,13 +293,17 @@ function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl,
                 productContainer.innerHTML+= `
 
                 <div><i class="fas fa-times-circle"></i> <span>${item.name}</span></div>
-                <div class="price">${item.price}</div>
+                <div class="price">${formatPrice(item.price)}</div>
                 <div class="quantity">${item.quantity}</div>
-                <div class="total">${item.total}</div>    
-                `        })     
+                <div class="total">${formatPrice(item.total)}</div>    
+                `  })     
+            }       
+                     totalCostContainer.innerHTML =`<div class="gras"> TOTAL: ${formatPrice(prixTotalResponse["total"])} </div> `
+        
+        }
             }
-                }
-            }
+
+            
 
     displayCart();
 
