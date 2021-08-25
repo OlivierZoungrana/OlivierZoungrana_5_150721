@@ -6,8 +6,6 @@ var panier = document.getElementById("panier-display")
 
 
 function displayCart(){
-
-  
     let cartItems = localStorage.getItem("cart")
    
     cartItems = JSON.parse(cartItems)
@@ -55,14 +53,14 @@ function displayCart(){
 
     let btnEnvoyerFormulaire = document.querySelector("#sendFormulaire")
 
-    function createTableauId(){
+function createTableauId(){
         products= [];
       for(let i in cartData){
           for(let k in cartData[i]){
               products.push(cartData[i][k]._id)
           }
       } 
-      };
+    };
       createTableauId();
       
       console.log();

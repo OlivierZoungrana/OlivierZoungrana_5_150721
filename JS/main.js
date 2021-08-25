@@ -39,6 +39,7 @@ function createCart(){
     localStorage.setItem('cart', JSON.stringify(cartN));
 }
 
+//formatter les différents prix
 function formatPrice( rawPrice ) {
     let separator = ',';
     let symbol = '€';
@@ -193,65 +194,66 @@ fetch("http://localhost:3000/api/cameras/"+ productId)
 
 function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl, descriptionCamera, selectionCamera, onClick={} ){
 
-let cardmb3 = document.createElement("div")
-cardmb3.classList.add("card", "mb-3")
-let rowg= document.createElement("div")
-rowg.classList.add("row","g-0")
-let colmd= document.createElement("div")
-colmd.classList.add("col-md-4")
-let colmd2= document.createElement("div")
-colmd2.classList.add("col-md-8")
-let cardBody= document.createElement("div")
-cardBody.classList.add("card-body")
-let cardBody2 = document.createElement("div")
-cardBody2.classList.add("card-body")
+    let cardmb3 = document.createElement("div")
+    cardmb3.classList.add("card", "mb-3")
+    let rowg= document.createElement("div")
+    rowg.classList.add("row","g-0")
+    let colmd= document.createElement("div")
+    colmd.classList.add("col-md-4")
+    let colmd2= document.createElement("div")
+    colmd2.classList.add("col-md-8")
+    let cardBody= document.createElement("div")
+    cardBody.classList.add("card-body")
+    let cardBody2 = document.createElement("div")
+    cardBody2.classList.add("card-body")
 
-let cardTitle = document.createElement("h5")
-cardTitle.classList.add("card-title")
-let cardText = document.createElement("p")
-cardText.classList.add("card-text")
-let mot=  document.createElement("p").textContent= `Selectionner un lens : `;
+    let cardTitle = document.createElement("h5")
+    cardTitle.classList.add("card-title")
+    let cardText = document.createElement("p")
+    cardText.classList.add("card-text")
+    let mot=  document.createElement("p").textContent= `Selectionner un lens : `;
 
-cardmb3.append(rowg)
-rowg.append(colmd)
-rowg.append(colmd2)
-colmd2.append(cardBody)
-cardBody.append(cardTitle)
-cardBody.append(cardText)
-cardBody.append(mot)
-colmd2.append(cardBody2)
+    cardmb3.append(rowg)
+    rowg.append(colmd)
+    rowg.append(colmd2)
+    colmd2.append(cardBody)
+    cardBody.append(cardTitle)
+    cardBody.append(cardText)
+    cardBody.append(mot)
+    colmd2.append(cardBody2)
 //création de lélement image et insertion dans le colmd
-let selection = document.createElement("select");
-selection.classList.add("card-text")
-selection.innerHTML = selectionCamera
-cardBody.append(selection)
-let opt = document.querySelector(".opt")
-   for(i=0; i<datalenses.length; i++){
-         let opti = datalenses[i];
-      let option = document.createElement("option")      
-       option.innerHTML= opti;        option.value = opti;
-    selection.appendChild(option);     }
+    let selection = document.createElement("select");
+    selection.classList.add("card-text")
+    selection.innerHTML = selectionCamera
+    cardBody.append(selection)
+    let opt = document.querySelector(".opt")
+    for(i=0; i<datalenses.length; i++){
+        let opti = datalenses[i];
+        let option = document.createElement("option")      
+        option.innerHTML= opti;        
+        option.value = opti;
+        selection.appendChild(option);     }
 
 
-cardTitle.innerHTML = nameCamera;
-cardText.innerHTML =formatPrice(priceCamera)
-let imag = document.createElement("img")
-imag.classList.add("img-fluid", "rounded-start")
-colmd.append(imag)
-imag.src = imageUrl
+    cardTitle.innerHTML = nameCamera;
+    cardText.innerHTML =formatPrice(priceCamera)
+    let imag = document.createElement("img")
+    imag.classList.add("img-fluid", "rounded-start")
+    colmd.append(imag)
+    imag.src = imageUrl
 
-const addContainer = document.createElement("div");
-const cameraRaw = { _id: idCamera, name: nameCamera, price: priceCamera, imageUrl: imag}
- 
- 
+    const addContainer = document.createElement("div");
+    const cameraRaw = { _id: idCamera, name: nameCamera, price: priceCamera, imageUrl: imag}
+    
+    
     const addButton = document.createElement("button");
     addButton.classList.add("btn-primary", "btn", "col-md-8")
-   addButton.innerHTML = "Ajouter au Panier";
+    addButton.innerHTML = "Ajouter au Panier";
 
-  addButton.addEventListener("click", () =>addToCart(cameraRaw, 1));
-    cardBody2.append(addButton)
- 
-return cardmb3
+    addButton.addEventListener("click", () =>addToCart(cameraRaw, 1));
+        cardBody2.append(addButton)
+    
+    return cardmb3;
 
   }
 
