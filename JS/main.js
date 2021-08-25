@@ -1,5 +1,5 @@
-
 const carts = document.querySelector("#cart");
+
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -53,7 +53,9 @@ function updateCartData() {
     cart.innerHTML = cartData.quantity;
 }
 
-//ajouter un produit au panier
+
+
+// ajouter un produit au panier
 function addToCart(product, quantity){
     let cartN = getCart();
 
@@ -179,354 +181,77 @@ fetch("http://localhost:3000/api/cameras/"+ productId)
         addToCart
         
     );
-
-
-    
-
     container.append(cameras);
 
 })
     article.appendChild(container);
 };
 
-
-
+// addProduct.addEventListener("click", () =>addToCart(cameraRaw, 1));
 
 function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl, descriptionCamera, selectionCamera, onClick={} ){
-    const div = document.createElement("div");
-    div.classList.add("card", "mb-3");
-    
-    const id_camera = document.createElement('p');
 
-    const div1 = document.createElement("div")
-    div1.classList.add("row")
-    div.append(div1)
+let cardmb3 = document.createElement("div")
+cardmb3.classList.add("card", "mb-3")
+let rowg= document.createElement("div")
+rowg.classList.add("row","g-0")
+let colmd= document.createElement("div")
+colmd.classList.add("col-md-4")
+let colmd2= document.createElement("div")
+colmd2.classList.add("col-md-8")
+let cardBody= document.createElement("div")
+cardBody.classList.add("card-body")
+let cardBody2 = document.createElement("div")
+cardBody2.classList.add("card-body")
 
-    const div3 = document.createElement("div")
-    const cameraThumb = document.createElement("img");
-    cameraThumb.src = imageUrl;
-    cameraThumb.classList.add("img-fluid", "rounded-start")
-    
-    div3.classList.add("col-md-4")
-  
-    cameraThumb.append(div3)
+let cardTitle = document.createElement("h5")
+cardTitle.classList.add("card-title")
+let cardText = document.createElement("p")
+cardText.classList.add("card-text")
+let mot=  document.createElement("p").textContent= `Selectionner un lens : `;
 
-
-    const div2 = document.createElement("div")
-    div2.classList.add("card-body")
-
-    div2.classList.add("col-md-8")
-    const name = document.createElement("h3");
-    name.classList.add("card-title", "col-md-8");
-    name.innerHTML = nameCamera;
-   div2.insertBefore(name, null)
-
-    const description = document.createElement("p");
-    description.classList.add("card-text","col-md-8" );
-    description.innerHTML = descriptionCamera;
- 
-    const price = document.createElement("h4");
-    price.classList.add("card-text", "col-md-8");
-    price.innerHTML = formatPrice(priceCamera);
-
-
-   let mot=  document.createElement("p").textContent= `Selectionner un lens : `;
-    const selection = document.createElement("select");
-    selection.classList.add("card-text", "opt"); 
-    selection.innerHTML= selectionCamera;
-
-    let opt = document.querySelector(".opt")
-
-    // ajouter une option dans le select 
-    for(i=0; i<datalenses.length; i++){
+cardmb3.append(rowg)
+rowg.append(colmd)
+rowg.append(colmd2)
+colmd2.append(cardBody)
+cardBody.append(cardTitle)
+cardBody.append(cardText)
+cardBody.append(mot)
+colmd2.append(cardBody2)
+//création de lélement image et insertion dans le colmd
+let selection = document.createElement("select");
+selection.classList.add("card-text")
+selection.innerHTML = selectionCamera
+cardBody.append(selection)
+let opt = document.querySelector(".opt")
+   for(i=0; i<datalenses.length; i++){
          let opti = datalenses[i];
-        let option = document.createElement("option")
-        option.innerHTML= opti;
-        option.value = opti;
-        selection.appendChild(option);
-    }
+      let option = document.createElement("option")      
+       option.innerHTML= opti;        option.value = opti;
+    selection.appendChild(option);     }
 
 
-    
- 
- 
-    const addContainer = document.createElement("div");
-    const cameraRaw = { _id: idCamera, name: nameCamera, price: priceCamera, imageUrl: cameraThumb}
+cardTitle.innerHTML = nameCamera;
+cardText.innerHTML =formatPrice(priceCamera)
+let imag = document.createElement("img")
+imag.classList.add("img-fluid", "rounded-start")
+colmd.append(imag)
+imag.src = imageUrl
+
+const addContainer = document.createElement("div");
+const cameraRaw = { _id: idCamera, name: nameCamera, price: priceCamera, imageUrl: imag}
  
  
     const addButton = document.createElement("button");
     addButton.classList.add("btn-primary", "btn", "col-md-8")
-    addButton.innerHTML = "Ajouter au Panier";
+   addButton.innerHTML = "Ajouter au Panier";
 
-    addButton.addEventListener("click", () =>addToCart(cameraRaw, 1));
-    addContainer.append(addButton);
+  addButton.addEventListener("click", () =>addToCart(cameraRaw, 1));
+    cardBody2.append(addButton)
  
-    div.append(cameraThumb, name, description, mot, selection, price, addContainer);
-    return div;
+return cardmb3
 
   }
-
-//afficher les informations des produits chois dans le panier
-  function displayCart(){
-
-  
-    let cartItems = localStorage.getItem("cart")
-   
-    cartItems = JSON.parse(cartItems)
-
-    console.log(cartItems)
-
-    let prixTotalResponse = localStorage.getItem("cart")
-
-    prixTotalResponse = JSON.parse(prixTotalResponse)
-    
-    let productContainer = document.querySelector(".display-cart")
-    let totalCostContainer = document.querySelector(".totalCost")
-
-    if(cartItems && productContainer){
-            // productContainer.insertBefore = '';
-
-        for(let i in cartItems){
-            
-                    Object.values(cartItems[i]).map(item=>{
-
-                productContainer.innerHTML+= `
-
-                <div><i class="fas fa-times-circle"></i> <span>${item.name}</span></div>
-                <div class="price">${formatPrice(item.price)}</div>
-                <div class="quantity">${item.quantity}</div>
-                <div class="total">${formatPrice(item.total)}</div>    
-                `  })     
-            }       
-                     totalCostContainer.innerHTML =`<div class="gras"> TOTAL: ${formatPrice(prixTotalResponse["total"])} </div> `
-        
-        }
-            }
-
-            
-
-    displayCart();
-
-
-//création tableauId
-
-function createTableauId(){
-    products= [];
-for(let i in cartData){
-    for(let k in cartData[i]){
-        products.push(cartData[i][k]._id)
-    }
-} 
-};
-createTableauId();
-
-console.log();
-
-
-// console.log(tableauId)
-
-//
-
-//selection du bouton envoyer
-
-let btnEnvoyerFormulaire = document.querySelector("#sendFormulaire")
-
-
-// envoi du formulaire et du panier de produit dans le locaStorage et vérification des champs du formulaire
-btnEnvoyerFormulaire.addEventListener('click', async(e)=>{
-e.preventDefault();
-
-let contact = {
-
-    firstName: document.querySelector("#firstName").value,
-    lastName:document.querySelector("#lastName").value,
-    address: document.querySelector("#address").value,
-    city:document.querySelector("#city").value,
-    email: document.querySelector("#email").value
- }
-
-
- // validation formulaire//
-
-let testAlert = (value)=>{
-    return `${value} n'est pas correct:  Chiffres et symboles ne sont aps autorisés \n ne pas dépasser 20caractères, minimum 3 caractères ` }
-
-
-let regExLastNameFistNameCity = (value)=>{
-   return /^[ \u00c0-\u01ffa-zA-Z'\-]{3,20}$/.test(value);
- }
-
-let regExEmail = (value)=>{
-  return /^^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
- }
-
-let regExAdress = (value)=>{
-   return /^[a-zA-Z0-9\s,.'-]{3,}$/.test(value);
- }
- //controle de la validité du nom
-
-
- // gérer l'affichage du texte à coté des champs
-function dataChampmanquantTexteVide(querySelectorId){
-  document.querySelector(`#${querySelectorId}`).textContent ="";
- }
-
-function dataChampmanquantTexte(querySelectorId){
-  document.querySelector(`#${querySelectorId}`).textContent ="veuillez remplir correctement ce chanp";
- }
-
-function controlFirstName(){
-
-let theFistName = contact.firstName
-
-if(regExLastNameFistNameCity(theFistName)){
-  dataChampmanquantTexteVide("noFirstName");
-  return true;
-}else{
-   dataChampmanquantTexte("noFirstName");
-alert(testAlert("fistName"))
- return false;
-}
- }
-
-function controlLastName(){
-  let theLastName = contact.lastName
-
- if(regExLastNameFistNameCity(theLastName)){
-   dataChampmanquantTexteVide("noLastName")
-  return true;
- }else{
- dataChampmanquantTexte("noLastName")
-alert(testAlert("lastName"))
- return false;
-}
-}
-
-function controlCity(){
-  let theCity = contact.city
-
- if(regExLastNameFistNameCity(theCity)){
-   dataChampmanquantTexteVide("noCity")
-  return true;
- }else{
- dataChampmanquantTexte("noCity")
-alert(testAlert("city"))
- return false;
-}
-}
-function controlAdresse(){
-
-  let theAdresse = contact.address
-
- if(regExAdress(theAdresse)){
-   dataChampmanquantTexteVide("noAddress")
-  return true;
- }else{
- dataChampmanquantTexte("noAddress")
-alert("l' adresse n'est pas valide")
- return false;
-}
-
-}
-
-function controlEmail(){
-
-  let theEmail = contact.email
-
- if(regExEmail(theEmail)){
-   dataChampmanquantTexteVide("noEmail")
-  return true;
- }else{
- dataChampmanquantTexte("noEmail")
-alert("l'email n'est pas valide")
- return false;
-}
-
-}
-
-
-if(controlFirstName() && controlLastName() && controlCity() && controlEmail() && controlAdresse()){
- localStorage.setItem("contact", JSON.stringify(contact));
-
-
-
-    const aEnvoyer = {
-        products,
-        contact
-    };
-
-    sendToServer(aEnvoyer);
-
-    
-}else{
-    document.querySelector(".alert")
-
-  alert("remplissez correctement le formulaire");
-}
-
-    
-});
-
-// envoyer les informations de la commande au serveur
-function sendToServer(aEnvoyer){
-  let promesse = fetch("http://localhost:3000/api/cameras/order/", {
-        method: "POST",
-        body: JSON.stringify(aEnvoyer),
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-    });
-
-    promesse.then(async(response)=>{
-      try{
-        let contenu = await response.json();
-        console.log("contenu de la reponse");
-        console.log(contenu);
-
-if(response.ok){
-
-  //récuperer lId
-  console.log("l'orderId")
-  console.log(contenu.orderId);
-  localStorage.setItem("orderId", contenu.orderId);
-
-  //Changer de page
-
-  window.location = "order.html";
-
-}else{
-
-}
-
-      }catch(e){
-        console.log(e)
-      }
-    });
-
-}
-//contenu du résultat serveur
-
-
-
-// contenu local storage dans le formulaire
-
-let localData = localStorage.getItem("contact")
-let dataObject = JSON.parse(localData);
-
-function remplirFormulaireLocalStorage(input){
-  document.querySelector(`#${input}`).value = dataObject[input];
-};
-
-remplirFormulaireLocalStorage("firstName");
-remplirFormulaireLocalStorage("lastName");
-remplirFormulaireLocalStorage("address");
-remplirFormulaireLocalStorage("city");
-remplirFormulaireLocalStorage("email");
-
-
-console.log(dataObject)
-
 
 
 

@@ -46,10 +46,7 @@
     </div>
 
     <div class="container">
-        <div class="row">
-
-        
-            
+        <div id="panier-display" class="row">
 
               <div class="display-cart">
                     <h5 class="product-title">Produit</h5>
@@ -60,35 +57,35 @@
               <div class="totalCost">
                 
               </div>
+              <div>
+            <button class="btn btn-primary valider-panier">VALIDER PANIER</button>
+              </div>
+
+            
         </div>
 
         <div class="row formulaire-content"></div>
 
-        <form action="./order.html" >
+        <form id="formula" action="./order.html" >
+            <h2>FORMULAIRE</h2>
           <div class="form-row">
             <div class="col-md-4 mb-3">
               <label for="firsName">Nom</label>
               <span id="noFirstName" class="infoChampManquant"></span>
               <input type="text" class="form-control is-valid" id="firstName" placeholder="First name" value="Mark" required>
-              <div class="valid-feedback">
-                Valide!
-              </div>
+             
             </div>
             <div class="col-md-4 mb-3">
               <label for="lastName">Prénom</label><br>
               <span id="noLastName" class="infoChampManquant"></span>
               <input type="text" class="form-control is-valid" id="lastName" placeholder="Last name" value="Otto" required>
-              <div class="valid-feedback">
-                Valide!
-              </div>
+              
             </div>
             <div class="col-md-6 mb-3">
               <label for="address">Adresse</label><br>
               <span id="noAddress" class="infoChampManquant"></span>
               <input type="text" class="form-control is-valid" id="address" placeholder="Adresse" required>
-              <div class="invalid-feedback">
-                Entrer votre Adresse.
-              </div>
+              
             </div>
           </div>
           <div class="form-row">
@@ -96,9 +93,6 @@
               <label for="city">Ville</label><br>
               <span id="noCity" class="infoChampManquant"></span>
               <input type="text" class="form-control is-valid" id="city" placeholder="City" required>
-              <div class="invalid-feedback">
-                Choissisez une ville.
-              </div>
             </div>
           </div>
           <div class="form-row">
@@ -106,9 +100,6 @@
               <label for="email">E-mail</label><br>
               <span id="noEmail" class="infoChampManquant"></span>
               <input type="email" class="form-control is-valid" id="email" placeholder="e-mail" required>
-              <div class="invalid-feedback">
-                Votre 
-              </div>
             </div>
           </div>
   
@@ -189,6 +180,7 @@
         <!-- Copyright -->
       </footer>
       <script src="./JS/main.js"></script>
+      <script src="./JS/panier.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </body>
 

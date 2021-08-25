@@ -102,11 +102,32 @@ main {
     display: flex;
     justify-content: flex-end;
     margin:0;
-    border: 1px solid blue;
+    border: 3px solid blue;
     padding: 1em;
-
 }
+
+
 
 .card-confirmation{
     align-content: center;
 }
+
+#formula{
+    display: none;
+    padding: 2em;
+}
+
+.valider-panier{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.hidden{
+    font-size: 3em;
+    color: blueviolet;
+    text-transform: uppercase;
+    text-align: center;
+    
+}
+
+
