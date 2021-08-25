@@ -130,4 +130,17 @@ main {
     
 }
 
+.fa-chevron-circle-down{
+    color: blue;
+    padding: 0.2em;
+    font-size: 1.2em;
+}
+
+.fa-chevron-circle-up{
+    color: blue;
+    padding: 0.2em;
+    font-size: 1.2em;
+
+}
+
 

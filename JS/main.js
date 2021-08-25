@@ -83,6 +83,8 @@ console.log(keys.indexOf(product._id))
     console.log(cartN)
     
     console.log(product, quantity)
+
+    alert("Votre produit a été ajouté")
     
 };
 

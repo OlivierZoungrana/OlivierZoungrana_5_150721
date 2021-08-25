@@ -41,7 +41,7 @@ deleteLocalStorage("orderId");
 
 
 if(orderIdResponse == null){
-    window.location.href="index.html";
+    window.location="index.html";
 }
 
 

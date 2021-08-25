@@ -30,15 +30,26 @@ function displayCart(){
 
                 productContainer.innerHTML+= `
 
-                <div><i class="fas fa-times-circle"></i> <span>${item.name}</span></div>
+                <div><span>${item.name}</span></div>
                 <div class="price">${formatPrice(item.price)}</div>
-                <div class="quantity">${item.quantity}</div>
+                <div class="quantity"><i class="fas fa-chevron-circle-down"></i>${item.quantity}<i class="fas fa-chevron-circle-up"></i></div>
                 <div class="total">${formatPrice(item.total)}</div>    
                 `  })     
             }       
                      totalCostContainer.innerHTML =`<div class="gras"> TOTAL: ${formatPrice(prixTotalResponse["total"])} </div> `
         
         }
+
+        let circle = document.querySelectorAll(".fa-times-circle")
+        console.log(circle)
+
+        for(let l=0; l<circle.length; l++){
+            circle[l].addEventListener("click", e=>{
+                e.preventDefault();
+                console.log("toto")
+            })
+        }
+
             }
     displayCart();
 
@@ -229,9 +240,6 @@ if(response.ok){
     });
 
 }
-//contenu du résultat serveur
-
-
 
 // contenu local storage dans le formulaire
 
@@ -250,7 +258,7 @@ function remplirFormulaireLocalStorage(input){
 
 
 
-
+// afficher le formulaire après click sur le bouton
 
 validePanier.addEventListener("click", e=>{
 
@@ -268,8 +276,6 @@ function displayPanier(){
     console.log(cart)
     if( cart.quantity == 0){
 
-    console.log("toto")
-    
         panier.innerHTML = ` le panier est vide`;
         panier.classList.add("hidden")
 
@@ -282,5 +288,23 @@ function displayPanier(){
 }
 
 displayPanier();
+
+// incrémenter et décrementer la quantité
+let chevronDown = document.querySelectorAll(".fa-chevron-circle-down")
+
+for(let i=0; i<chevronDown.length; i++){
+
+    chevronDown[i].addEventListener("click", e=>{
+ let carta = JSON.parse(localStorage.getItem("cart"))
+        if(carta.quantity>1){
+            carta.quantity = carta.quantity -1;
+        }else{
+            alert("impossible d'effectuer cette opération")
+        }
+        
+        console.log("iti")
+
+    })
+}
 
 
