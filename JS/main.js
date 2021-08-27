@@ -87,29 +87,32 @@ console.log(keys.indexOf(product._id))
 
     alert("Votre produit a été ajouté")
     
-};
-
+}
 
 function generateCameras(nameCamera, priceCamera, imageUrl, idCamera, onClick = {}) {
     const div = document.createElement("div");
     div.classList.add("col-xl-3", "col-lg-4", "col-md-6", "p-2");
 
-    const a = document.createElement("a");
+    const card = document.createElement("div");
 
     const id = document.createElement("p")
     id.innerHTML = idCamera;
-    a.href="detail.html?sku=" + idCamera;
-    a.classList.add("card");
+    
+    card.classList.add("card");
  
     const cameraThumb = document.createElement("img");
     cameraThumb.src = imageUrl;
+    cameraThumb.classList.add("card-img-top");
+
+    const cardContent = document.createElement("div");
+    cardContent.classList.add("card-body");
 
    
-    const name = document.createElement("h3");
+    const name = document.createElement("h5");
     name.classList.add("card-title");
     name.innerHTML = nameCamera;
  
-    const price = document.createElement("h4");
+    const price = document.createElement("p");
     price.classList.add("card-text")
     price.innerHTML = formatPrice(priceCamera);
  
@@ -118,28 +121,22 @@ function generateCameras(nameCamera, priceCamera, imageUrl, idCamera, onClick = 
     const cameraRaw = {name: nameCamera, imageUrl: cameraThumb, price: priceCamera}
  
  
-    const addButton = document.createElement("button");
-    addButton.classList.add("btn-primary", "btn")
-    addButton.innerHTML = "Ajouter au Panier";
-    addButton.addEventListener("click", () => onClick(cameraRaw, 1))
-    addButton.addEventListener("click",() =>{
-       
-        const alertte = document.createElement("div")
-        alertte.classList.add("alert", "alert-success")
-        alertte.innerHTML="produit ajouté"
+    const detailButton = document.createElement("a");
+    detailButton.classList.add("btn-primary", "btn")
+    detailButton.innerHTML = "Voir le produit";
+    detailButton.href="detail.html?sku=" + idCamera;
 
-    });
-    addContainer.append(addButton);
+    addContainer.append(detailButton);
+
+    cardContent.append(name, price, addContainer)
  
-    a.append(cameraThumb, name, price);
-    div.append(a);
+    card.append(cameraThumb, cardContent);
+    div.append(card);
     return div;
  }
 
 function getProducts(){
-    const container = document.createElement("div")
-    let article = document.querySelector(".boutique");
-    container.classList.add("containers")
+    let container = document.querySelector(".boutique");
 
 fetch("http://localhost:3000/api/cameras")
 .then(res=> res.json())
@@ -157,7 +154,7 @@ fetch("http://localhost:3000/api/cameras")
   container.append(cameras);
 }));
 
-article.appendChild(container);
+// article.appendChild(container);
 }
 
 //générer les information du produit grace à son Id
@@ -211,7 +208,11 @@ function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl,
     cardTitle.classList.add("card-title")
     let cardText = document.createElement("p")
     cardText.classList.add("card-text")
-    let mot=  document.createElement("p").textContent= `Selectionner un lens : `;
+
+    let cardDescription = document.createElement("p")
+    cardDescription.classList.add("p-2")
+
+    let mot=  document.createElement("p").textContent= `Selectionner une lentille : `;
 
     cardmb3.append(rowg)
     rowg.append(colmd)
@@ -219,6 +220,7 @@ function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl,
     colmd2.append(cardBody)
     cardBody.append(cardTitle)
     cardBody.append(cardText)
+    cardBody.append(cardDescription)
     cardBody.append(mot)
     colmd2.append(cardBody2)
 //création de lélement image et insertion dans le colmd
@@ -237,6 +239,7 @@ function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl,
 
     cardTitle.innerHTML = nameCamera;
     cardText.innerHTML =formatPrice(priceCamera)
+    cardDescription.innerHTML = '<strong>Description:</strong><br>' + descriptionCamera
     let imag = document.createElement("img")
     imag.classList.add("img-fluid", "rounded-start")
     colmd.append(imag)
