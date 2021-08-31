@@ -4,14 +4,13 @@ var formula = document.getElementById("formula")
 var cartDisplay = document.querySelector(".display-cart")
 var panier = document.getElementById("panier-display")
 
-
+/**
+ * 
+ * affiche le contenu du panier contenu dans le localStorage
+ */
 function displayCart(){
     let cartItems = localStorage.getItem("cart")
-   
     cartItems = JSON.parse(cartItems)
-
-    console.log(cartItems)
-
     let prixTotalResponse = localStorage.getItem("cart")
 
     prixTotalResponse = JSON.parse(prixTotalResponse)
@@ -24,13 +23,13 @@ function displayCart(){
 
         for(let i in cartItems){
             
-                    Object.values(cartItems[i]).map(item=>{
+            Object.values(cartItems[i]).map(item=>{
 
-                productContainer.innerHTML+= `
+            productContainer.innerHTML+= `
 
                 <div><span>${item.name}</span></div>
                 <div class="price">${formatPrice(item.price)}</div>
-                <div class="quantity"><i class="fas fa-chevron-circle-down"></i>${item.quantity}<i class="fas fa-chevron-circle-up"></i></div>
+                <div class="quantity">${item.quantity}</div>
                 <div class="total">${formatPrice(item.total)}</div>    
                 `  })     
             }       
@@ -51,7 +50,7 @@ function displayCart(){
             }
     displayCart();
 
-    let btnEnvoyerFormulaire = document.querySelector("#sendFormulaire")
+let btnEnvoyerFormulaire = document.querySelector("#sendFormulaire")
 
 function createTableauId(){
         products= [];
@@ -64,7 +63,10 @@ function createTableauId(){
       createTableauId();
       
       console.log();
-// envoi du formulaire et du panier de produit dans le locaStorage et vérification des champs du formulaire
+
+/**
+ *  envoi du formulaire et du panier de produit dans le locaStorage et vérification des champs du formulaire
+ */
 
 btnEnvoyerFormulaire.addEventListener("click", async(e)=>{
 e.preventDefault();
@@ -200,7 +202,12 @@ if(controlFirstName() && controlLastName() && controlCity() && controlEmail() &&
     
 });
 
-// envoyer les informations de la commande au serveur
+
+/**
+ * envoyer les informations de la commande au serveur
+ * @param {*} aEnvoyer 
+ */
+// 
 function sendToServer(aEnvoyer){
   let promesse = fetch("http://localhost:3000/api/cameras/order/", {
         method: "POST",
@@ -210,7 +217,6 @@ function sendToServer(aEnvoyer){
         },
 
     });
-
     promesse.then(async(response)=>{
       try{
         let contenu = await response.json();
@@ -231,12 +237,10 @@ if(response.ok){
 }else{
 
 }
-
       }catch(e){
         console.log(e)
       }
     });
-
 }
 
 // contenu local storage dans le formulaire
@@ -247,13 +251,6 @@ let dataObject = JSON.parse(localData);
 function remplirFormulaireLocalStorage(input){
   document.querySelector(`#${input}`).value = dataObject[input];
 };
-
-// remplirFormulaireLocalStorage("firstName");
-// remplirFormulaireLocalStorage("lastName");
-// remplirFormulaireLocalStorage("address");
-// remplirFormulaireLocalStorage("city");
-// remplirFormulaireLocalStorage("email");
-
 
 
 // afficher le formulaire après click sur le bouton
@@ -266,7 +263,10 @@ validePanier.addEventListener("click", e=>{
 
 });
 
-// fonction affichage du panier
+/**
+ * fonction affichage du panier
+ */
+
 
 function displayPanier(){
     let cart= JSON.parse(localStorage.getItem("cart"))
@@ -287,22 +287,22 @@ function displayPanier(){
 
 displayPanier();
 
-// incrémenter et décrementer la quantité
-let chevronDown = document.querySelectorAll(".fa-chevron-circle-down")
+// // incrémenter et décrementer la quantité
+// let chevronDown = document.querySelectorAll(".fa-chevron-circle-down")
 
-for(let i=0; i<chevronDown.length; i++){
+// for(let i=0; i<chevronDown.length; i++){
 
-    chevronDown[i].addEventListener("click", e=>{
- let carta = JSON.parse(localStorage.getItem("cart"))
-        if(carta.quantity>1){
-            carta.quantity = carta.quantity -1;
-        }else{
-            alert("impossible d'effectuer cette opération")
-        }
+//     chevronDown[i].addEventListener("click", e=>{
+//  let carta = JSON.parse(localStorage.getItem("cart"))
+//         if(carta.quantity>1){
+//             carta.quantity = carta.quantity -1;
+//         }else{
+//             alert("impossible d'effectuer cette opération")
+//         }
         
-        console.log("iti")
+//         console.log("iti")
 
-    })
-}
+//     })
+// }
 
 

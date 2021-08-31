@@ -1,20 +1,15 @@
 const carts = document.querySelector("#cart");
-
-
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const productId = urlParams.get('sku');
 const productSpan = document.getElementById('product_id');
-
 let boutique = document.querySelector(".boutique")
+
 
 if(productId)
  getProductDetails(productId);
 if(boutique && productId===null)
 getProducts();
-
-
-
 
 // Initialize global cart data
 let cartData = getCart();
@@ -23,10 +18,18 @@ if(!cartData) {
 }
 updateCartData();
 
-// vérifie que la clé cart existe bien dans le localStorage
+/**
+ * 
+ *  vérifie que la clé cart existe bien dans le localStorage
+ * 
+ */
 function getCart(){
     return JSON.parse(localStorage.getItem('cart'));
 }
+
+/**
+ * créer un panier vide
+ */
 
 function createCart(){
 
@@ -39,7 +42,11 @@ function createCart(){
     localStorage.setItem('cart', JSON.stringify(cartN));
 }
 
-//formatter les différents prix
+/**
+ * 
+ * formatter les différents prix prend un paramètre un prix et le format en euros
+ */
+
 function formatPrice( rawPrice ) {
     let separator = ',';
     let symbol = '€';
@@ -48,22 +55,27 @@ function formatPrice( rawPrice ) {
 }
 
 
+/**
+ * mise à jour de la quantité dans le panier
+ */
+
 function updateCartData() {
     cartData = getCart()
-    // update menu cart quantity
     cart.innerHTML = cartData.quantity;
 }
 
+/**
+ *  ajoute un produit dans le panier et le localstorage et prend deux paramètres
+ * @param {*} product 
+ * @param {*} quantity 
+ */
 
-
-// ajouter un produit au panier
 function addToCart(product, quantity){
     let cartN = getCart();
 
     let cartProducts = cartN.products;
     let keys = Object.keys(cartProducts)
 
-    // console.log(keys)
 console.log(keys.indexOf(product._id))
 // console.log(cartN.products)
         if(keys.indexOf(product._id) !== -1){
@@ -89,7 +101,15 @@ console.log(keys.indexOf(product._id))
     
 }
 
-function generateCameras(nameCamera, priceCamera, imageUrl, idCamera, onClick = {}) {
+/**
+ * création d'une div contenant toutes les informations sur le produit, elle affiche la liste des caméras contenus dans l'API
+ * @param {*} nameCamera 
+ * @param {*} priceCamera 
+ * @param {*} imageUrl 
+ * @param {*} idCamera 
+ */
+
+function generateCameras(nameCamera, priceCamera, imageUrl, idCamera) {
     const div = document.createElement("div");
     div.classList.add("col-xl-3", "col-lg-4", "col-md-6", "p-2");
 
@@ -135,6 +155,11 @@ function generateCameras(nameCamera, priceCamera, imageUrl, idCamera, onClick = 
     return div;
  }
 
+
+ /**
+  * appel dans l'aPI des différentes caméras à afficher grace à generateCameras
+  */
+
 function getProducts(){
     let container = document.querySelector(".boutique");
 
@@ -157,19 +182,20 @@ fetch("http://localhost:3000/api/cameras")
 // article.appendChild(container);
 }
 
-//générer les information du produit grace à son Id
+
+/**
+ * générer les information du produit grace à son Id
+ * @param {*} productId 
+ */
 function getProductDetails(productId){
     const container = document.createElement("div")
     container.classList.add("container")
     let article = document.querySelector(".boutique");
     let item= [];
-  
-    
-
-fetch("http://localhost:3000/api/cameras/"+ productId)
-.then(response => response.json())
-.then(data =>{
-    //  console.log(data);
+    fetch("http://localhost:3000/api/cameras/"+ productId)
+    .then(response => response.json())
+    .then(data =>{
+        //  console.log(data);
 
     const cameras = generateOneCamera(
         data.lenses,
@@ -187,9 +213,19 @@ fetch("http://localhost:3000/api/cameras/"+ productId)
     article.appendChild(container);
 };
 
-// addProduct.addEventListener("click", () =>addToCart(cameraRaw, 1));
+/**
+ * 
+ * générer une div con tenant les information du produit sélectionné
+ * @param {*} datalenses 
+ * @param {*} idCamera 
+ * @param {*} nameCamera 
+ * @param {*} priceCamera 
+ * @param {*} imageUrl 
+ * @param {*} descriptionCamera 
+ * @param {*} selectionCamera 
+ */
 
-function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl, descriptionCamera, selectionCamera, onClick={} ){
+function generateOneCamera(datalenses, idCamera,nameCamera,priceCamera,imageUrl, descriptionCamera, selectionCamera){
 
     let cardmb3 = document.createElement("div")
     cardmb3.classList.add("card", "mb-3")
