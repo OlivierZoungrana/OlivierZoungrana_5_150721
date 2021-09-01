@@ -72,7 +72,6 @@ function updateCartData() {
 
 function addToCart(product, quantity){
     let cartN = getCart();
-
     let cartProducts = cartN.products;
     let keys = Object.keys(cartProducts)
 
@@ -208,6 +207,7 @@ function getProductDetails(productId){
         
     );
     container.append(cameras);
+        
 
 })
     article.appendChild(container);
