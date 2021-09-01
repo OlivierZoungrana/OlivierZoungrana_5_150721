@@ -40,6 +40,7 @@ function deleteLocalStorage(key){
     
 };
 
+
 deleteLocalStorage("cart");
 deleteLocalStorage("contact");
 deleteLocalStorage("orderId");
